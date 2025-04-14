@@ -8,7 +8,6 @@ export const useTaskStore = defineStore('taskStore', () => {
         const tasksList = tasks ? JSON.parse(tasks) : []
         tasksList.push(task)
         localStorage.setItem('tasks', JSON.stringify(tasksList))
-        console.log(localStorage.getItem('tasks'))
     }
 
 

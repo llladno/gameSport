@@ -41,22 +41,18 @@ const emit = defineEmits<{
 }>();
 
 const handleEditTask = (task: Task) => {
-  console.log('Edit task:', task);
   emit('edit-task', task);
 };
 
 const handleDeleteTask = (taskId: number) => {
-  console.log('Delete task with ID:', taskId);
   emit('delete-task', taskId);
 };
 
 const handleToggleCompleted = (task: Task) => {
-  console.log('Toggle completed:', task);
   tasksListStore.updateTask(task);
 };
 
 const handleToggleSubtask = (subtaskId: number, taskId: number) => {
-  console.log('Toggle subtask:', subtaskId, 'in task:', taskId);
   const task = tasks.value.find(t => t.id === taskId);
   if (task && task.subtasks) {
     const updatedSubtasks = task.subtasks.map(st => 

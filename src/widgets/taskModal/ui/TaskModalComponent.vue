@@ -191,7 +191,6 @@ const updateTaskFromImport = (importedTask: Partial<Task>):void => {
   @include flex(column, flex-start, stretch, $spacing-lg);
   width: 100%;
   
-  // Элементы формы
   &__group {
     @include flex(column, flex-start, stretch, $spacing-xs);
     margin-bottom: $spacing-md;
@@ -247,7 +246,6 @@ const updateTaskFromImport = (importedTask: Partial<Task>):void => {
     color: $color-text-primary;
   }
   
-  // Секция подзадач
   &__subtasks {
     margin: $spacing-lg 0;
     padding-top: $spacing-lg;

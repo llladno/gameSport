@@ -96,7 +96,6 @@ const formatDate = (dateString: string): string => {
 <style lang="scss" scoped>
 @import "@styles/variables.scss";
 
-// Стили карточки задачи
 .task-card {
   background-color: $color-white;
   border-radius: $border-radius-medium;
@@ -116,7 +115,6 @@ const formatDate = (dateString: string): string => {
     }
   }
   
-  // Элементы карточки задачи
   &__header {
     @include flex(row, space-between, center);
     margin-bottom: $spacing-sm;

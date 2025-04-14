@@ -1,14 +1,12 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
-// Определяем тип TaskPriority локально, чтобы избежать проблем с импортом
 enum TaskPriority {
     Low = 'low',
     Medium = 'medium',
     High = 'high'
 }
 
-// Определяем интерфейс Task локально, чтобы избежать проблем с импортом
 interface Subtask {
     id: number,
     title: string,
@@ -28,7 +26,6 @@ interface Task {
 export const useTaskListStore = defineStore('taskListStore', () => {
     const tasks = ref<Task[]>([])
 
-    // Инициализация задач из localStorage при создании хранилища
     const initTasks = () => {
         try {
             const storedTasks = localStorage.getItem('tasks')
@@ -39,20 +36,16 @@ export const useTaskListStore = defineStore('taskListStore', () => {
         }
     }
 
-    // Вызов инициализации сразу
     initTasks()
 
-    // Сохранение задач в localStorage
     const saveTasks = () => {
         localStorage.setItem('tasks', JSON.stringify(tasks.value))
     }
 
-    // Получение всех задач
     const getTasks = () => {
         return tasks.value
     }
 
-    // Добавление новой задачи
     const addTask = (task: Partial<Task>) => {
         const newTask: Task = {
             id: Date.now(),
@@ -69,7 +62,6 @@ export const useTaskListStore = defineStore('taskListStore', () => {
         return newTask
     }
 
-    // Обновление существующей задачи
     const updateTask = (updatedTask: Partial<Task>) => {
         if (!updatedTask.id) return null
         
@@ -81,7 +73,6 @@ export const useTaskListStore = defineStore('taskListStore', () => {
         return tasks.value[index]
     }
 
-    // Удаление задачи по ID
     const deleteTask = (taskId: number) => {
         const index = tasks.value.findIndex((task: Task) => task.id === taskId)
         if (index === -1) return false

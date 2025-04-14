@@ -286,7 +286,6 @@ const handleImportButtonClick = ():void => {
 <style lang="scss" scoped>
 @import "@styles/variables.scss";
 
-// Основной контейнер импорта/экспорта
 .import-export {
   margin: $spacing-xl 0;
   padding: $spacing-lg 0;

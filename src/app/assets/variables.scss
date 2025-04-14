@@ -5,7 +5,6 @@ $primary-color-active: #a665f3;
 $default-white: #fcf7ff;
 $default-grey: #b7b7b7;
 
-// Добавленные переменные для задач
 $color-primary: #1890ff;
 $color-success: #52c41a;
 $color-warning: #fa8c16;
@@ -22,31 +21,25 @@ $color-bg-hover: #f0f0f0;
 $color-bg-blue-light: #e8f4ff;
 $color-white: white;
 
-// Цвета фона для приоритетов
 $color-bg-priority-low: #e6f7ff;
 $color-bg-priority-medium: #fff7e6;
 $color-bg-priority-high: #fff1f0;
 
-// Радиусы
 $border-radius-small: 4px;
 $border-radius-medium: 8px;
 $border-radius-large: 12px;
 
-// Отступы
 $spacing-xs: 4px;
 $spacing-sm: 8px;
 $spacing-md: 12px;
 $spacing-lg: 16px;
 $spacing-xl: 24px;
 
-// Тени и эффекты
 $shadow-base: 0 2px 8px rgba(0, 0, 0, 0.1);
 
-// Переходы
 $transition-base: all 0.2s ease;
 $transition-smooth: all 0.3s ease;
 
-// Миксин для флекс-контейнеров
 @mixin flex($direction: row, $justify: flex-start, $align: center, $gap: 0) {
   display: flex;
   flex-direction: $direction;
