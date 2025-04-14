@@ -12,8 +12,8 @@ export const i18n = createI18n({
   fallbackLocale: defaultLocale,
   messages: {
     en,
-    ru
-  }
+    ru,
+  },
 });
 
 export function setLocale(locale: Locale): void {
@@ -30,4 +30,4 @@ export function t(key: string): string {
   return i18n.global.t(key) as string;
 }
 
-export default i18n; 
+export default i18n;

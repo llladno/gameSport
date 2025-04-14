@@ -1,10 +1,13 @@
 <template>
   <div class="todo-list-container">
     <task-filter-component class="todo-list__filter" />
-    <div v-if="filteredTasks.length > 0" class="task-list">
-      <task-component 
-        v-for="task in filteredTasks" 
-        :key="task.id" 
+    <div
+      v-if="filteredTasks.length > 0"
+      class="task-list"
+    >
+      <task-component
+        v-for="task in filteredTasks"
+        :key="task.id"
         :task="task"
         @edit="handleEditTask"
         @delete="handleDeleteTask"
@@ -12,19 +15,22 @@
         @toggle-subtask="handleToggleSubtask"
       />
     </div>
-    <div v-else class="empty-state">
-      <p v-if="tasks.length > 0">{{ $t('tasks.empty.noFilteredTasks')}}</p>
-      <p v-else>{{ $t('tasks.empty.noTasks')}}</p>
+    <div
+      v-else
+      class="empty-state"
+    >
+      <p v-if="tasks.length > 0">{{ $t('tasks.empty.noFilteredTasks') }}</p>
+      <p v-else>{{ $t('tasks.empty.noTasks') }}</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useTaskListStore } from "@widgets/todoList";
-import { computed } from "vue";
-import { type Task } from "@entities/task";
-import { TaskComponent } from "@entities/task";
-import { TaskFilterComponent, useTaskFilter } from "@features/taskFilter";
+import { useTaskListStore } from '@widgets/todoList';
+import { computed } from 'vue';
+import { type Task } from '@entities/task';
+import { TaskComponent } from '@entities/task';
+import { TaskFilterComponent, useTaskFilter } from '@features/taskFilter';
 
 const tasksListStore = useTaskListStore();
 const taskFilterStore = useTaskFilter();
@@ -36,8 +42,8 @@ const filteredTasks = computed<Task[]>(() => {
 });
 
 const emit = defineEmits<{
-  (e: 'edit-task', task: Task): void
-  (e: 'delete-task', taskId: number): void
+  (e: 'edit-task', task: Task): void;
+  (e: 'delete-task', taskId: number): void;
 }>();
 
 const handleEditTask = (task: Task) => {
@@ -53,22 +59,22 @@ const handleToggleCompleted = (task: Task) => {
 };
 
 const handleToggleSubtask = (subtaskId: number, taskId: number) => {
-  const task = tasks.value.find(t => t.id === taskId);
+  const task = tasks.value.find((t) => t.id === taskId);
   if (task && task.subtasks) {
-    const updatedSubtasks = task.subtasks.map(st => 
-      st.id === subtaskId ? { ...st, completed: !st.completed } : st
+    const updatedSubtasks = task.subtasks.map((st) =>
+      st.id === subtaskId ? { ...st, completed: !st.completed } : st,
     );
-    
+
     tasksListStore.updateTask({
       ...task,
-      subtasks: updatedSubtasks
+      subtasks: updatedSubtasks,
     });
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@styles/variables.scss";
+@import '@styles/variables.scss';
 
 .todo-list-container {
   padding: $spacing-lg;

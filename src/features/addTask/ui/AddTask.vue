@@ -3,10 +3,8 @@
 </template>
 
 <script setup lang="ts">
-import {ButtonComponent} from "@shared/index.ts";
+import { ButtonComponent } from '@shared/index.ts';
 
 defineEmits(['openModal']);
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

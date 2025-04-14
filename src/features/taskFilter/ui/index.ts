@@ -1,5 +1,3 @@
 import TaskFilterComponent from './TaskFilterComponent.vue';
 
-export {
-  TaskFilterComponent
-}; 
+export { TaskFilterComponent };

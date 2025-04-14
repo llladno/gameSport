@@ -16,7 +16,7 @@
     "priority": {
       "title": "Priority",
       "low": "Low",
-      "medium": "Medium", 
+      "medium": "Medium",
       "high": "High"
     },
     "filter": {
@@ -69,4 +69,4 @@
     "version": "Version",
     "description": "Task management application"
   }
-} 
+}

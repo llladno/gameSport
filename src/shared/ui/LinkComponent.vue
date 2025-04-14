@@ -1,17 +1,20 @@
 <template>
-  <router-link :to="to" class="link">
+  <router-link
+    :to="to"
+    class="link"
+  >
     <slot />
   </router-link>
 </template>
 
 <script setup lang="ts">
 defineProps<{
-  to: string
-}>()
+  to: string;
+}>();
 </script>
 
 <style scoped lang="scss">
-@use "@styles/variables";
+@use '@styles/variables';
 
 .link {
   text-decoration: none;

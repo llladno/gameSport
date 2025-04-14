@@ -1,16 +1,12 @@
-<template>
-
-</template>
+<template></template>
 
 <script setup lang="ts">
 defineProps<{
   dropdownInfo: {
-    title: string,
-    action: () => void
-  }[]
-}>()
+    title: string;
+    action: () => void;
+  }[];
+}>();
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

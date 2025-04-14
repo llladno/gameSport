@@ -9,5 +9,5 @@ export interface TaskFilterOptions {
 export const initialFilterOptions: TaskFilterOptions = {
   search: '',
   showCompleted: true,
-  priorities: [TaskPriority.Low, TaskPriority.Medium, TaskPriority.High]
-}; 
+  priorities: [TaskPriority.Low, TaskPriority.Medium, TaskPriority.High],
+};

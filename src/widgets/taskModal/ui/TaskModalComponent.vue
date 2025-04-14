@@ -1,112 +1,186 @@
 <template>
-  <modal-component v-model="isModalOpen" :title="modalTitle">
-    <form @submit.prevent="handleSubmit" class="task-form">
+  <modal-component
+    v-model="isModalOpen"
+    :title="modalTitle"
+  >
+    <form
+      @submit.prevent="handleSubmit"
+      class="task-form"
+    >
       <div class="task-form__group">
-        <label class="task-form__label">{{$t('tasks.form.title')}}</label>
-        <input 
-          v-model="taskForm.title" 
-          type="text" 
+        <label class="task-form__label">{{ $t('tasks.form.title') }}</label>
+        <input
+          v-model="taskForm.title"
+          type="text"
           required
-          class="task-form__control"
-        >
-      </div>
-      
-      <div class="task-form__group">
-        <label class="task-form__label">{{$t('tasks.form.description')}}</label>
-        <textarea 
-          v-model="taskForm.description" 
           class="task-form__control"
         />
       </div>
-      
+
       <div class="task-form__group">
-        <label class="task-form__label">{{$t('tasks.form.priority')}}</label>
-        <select 
-          v-model="taskForm.priority" 
+        <label class="task-form__label">{{
+          $t('tasks.form.description')
+        }}</label>
+        <textarea
+          v-model="taskForm.description"
+          class="task-form__control"
+        />
+      </div>
+
+      <div class="task-form__group">
+        <label class="task-form__label">{{ $t('tasks.form.priority') }}</label>
+        <select
+          v-model="taskForm.priority"
           class="task-form__control"
           required
         >
-          <option :value="TaskPriority.Low">{{ $t(`tasks.priority.${TaskPriority.Low}`) }}</option>
-          <option :value="TaskPriority.Medium">{{ $t(`tasks.priority.${TaskPriority.Medium}`) }}</option>
-          <option :value="TaskPriority.High">{{ $t(`tasks.priority.${TaskPriority.High}`) }}</option>
+          <option :value="TaskPriority.Low">{{
+            $t(`tasks.priority.${TaskPriority.Low}`)
+          }}</option>
+          <option :value="TaskPriority.Medium">{{
+            $t(`tasks.priority.${TaskPriority.Medium}`)
+          }}</option>
+          <option :value="TaskPriority.High">{{
+            $t(`tasks.priority.${TaskPriority.High}`)
+          }}</option>
         </select>
       </div>
-      
-      <div class="task-form__group" v-if="mode === ModalMode.Edit">
+
+      <div
+        class="task-form__group"
+        v-if="mode === ModalMode.Edit"
+      >
         <div class="task-form__checkbox-group">
-          <input 
-            type="checkbox" 
+          <input
+            type="checkbox"
             class="task-form__checkbox"
             v-model="taskForm.completed"
-          >
+          />
           <span class="task-form__text">{{ $t('tasks.form.completed') }}</span>
         </div>
       </div>
-      
-      <div class="task-form__subtasks" v-if="mode === ModalMode.Edit">
+
+      <div
+        class="task-form__subtasks"
+        v-if="mode === ModalMode.Edit"
+      >
         <template v-if="taskForm.subtasks && taskForm.subtasks.length > 0">
-          <h4 class="task-form__section-title">{{$t('tasks.subtasks')}}</h4>
-          <div v-for="(subtask, index) in taskForm.subtasks" :key="subtask.id" class="task-form__subtask-item">
-            <input type="checkbox" class="task-form__checkbox" v-model="subtask.completed">
-            <input type="text" v-model="subtask.title" class="task-form__control">
-            <button-component type="button" :variant="ButtonVariant.Red" @click="removeSubtask(index)">Удалить</button-component>
+          <h4 class="task-form__section-title">{{ $t('tasks.subtasks') }}</h4>
+          <div
+            v-for="(subtask, index) in taskForm.subtasks"
+            :key="subtask.id"
+            class="task-form__subtask-item"
+          >
+            <input
+              type="checkbox"
+              class="task-form__checkbox"
+              v-model="subtask.completed"
+            />
+            <input
+              type="text"
+              v-model="subtask.title"
+              class="task-form__control"
+            />
+            <button-component
+              type="button"
+              :variant="ButtonVariant.Red"
+              @click="removeSubtask(index)"
+              >Удалить</button-component
+            >
           </div>
         </template>
-        
+
         <div class="task-form__add-subtask">
-          <button-component type="button" @click="showSubtaskForm = !showSubtaskForm" class="task-form__btn task-form__btn--add">
+          <button-component
+            type="button"
+            @click="showSubtaskForm = !showSubtaskForm"
+            class="task-form__btn task-form__btn--add"
+          >
             {{ showSubtaskForm ? 'Отменить' : 'Добавить подзадачу' }}
           </button-component>
-          
-          <div v-if="showSubtaskForm" class="task-form__subtask-form">
-            <input type="text" v-model="newSubtask" placeholder="Название подзадачи" class="task-form__control">
-            <button-component type="button" @click="addSubtask" class="task-form__btn task-form__btn--add">{{$t('tasks.submitAdd')}}</button-component>
+
+          <div
+            v-if="showSubtaskForm"
+            class="task-form__subtask-form"
+          >
+            <input
+              type="text"
+              v-model="newSubtask"
+              placeholder="Название подзадачи"
+              class="task-form__control"
+            />
+            <button-component
+              type="button"
+              @click="addSubtask"
+              class="task-form__btn task-form__btn--add"
+              >{{ $t('tasks.submitAdd') }}</button-component
+            >
           </div>
         </div>
       </div>
-      
-      <task-import-export-component 
-        :task="taskForm" 
+
+      <task-import-export-component
+        :task="taskForm"
         :mode="mode"
         @update-task="updateTaskFromImport"
       />
-      
+
       <div class="task-form__actions">
-        <button-component :variant="ButtonVariant.Grey" type="button" @click="closeModal">{{ $t('common.cancel') }}</button-component>
-        <button-component type="submit">{{ submitButtonText }}</button-component>
+        <button-component
+          :variant="ButtonVariant.Grey"
+          type="button"
+          @click="closeModal"
+          >{{ $t('common.cancel') }}</button-component
+        >
+        <button-component type="submit">{{
+          submitButtonText
+        }}</button-component>
       </div>
     </form>
   </modal-component>
 </template>
 
 <script setup lang="ts">
-import {computed, ref, watch} from 'vue';
-import {ButtonComponent, ButtonVariant, ModalComponent} from '@shared/index.ts';
-import type {Subtask, Task} from '@entities/task';
-import {TaskPriority} from '@entities/task';
-import {ModalMode, type Props} from "../types/TaskModal.ts";
+import { computed, ref, watch } from 'vue';
+import {
+  ButtonComponent,
+  ButtonVariant,
+  ModalComponent,
+} from '@shared/index.ts';
+import type { Subtask, Task } from '@entities/task';
+import { TaskPriority } from '@entities/task';
+import { ModalMode, type Props } from '../types/TaskModal.ts';
 import TaskImportExportComponent from './TaskImportExportComponent.vue';
-import {useTaskListStore} from "@widgets/todoList";
-import {useI18n} from "vue-i18n";
+import { useTaskListStore } from '@widgets/todoList';
+import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
 const props = withDefaults(defineProps<Props>(), {
-  mode: ModalMode.Add
+  mode: ModalMode.Add,
 });
 
 const taskListStore = useTaskListStore();
 
-const emit = defineEmits(['update:modelValue', 'add-task', 'edit-task', 'delete-task']);
+const emit = defineEmits([
+  'update:modelValue',
+  'add-task',
+  'edit-task',
+  'delete-task',
+]);
 
 const isModalOpen = computed({
   get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value)
+  set: (value) => emit('update:modelValue', value),
 });
 
-const modalTitle = computed<string>(() => props.mode === ModalMode.Add ? t('tasks.add') : t('tasks.edit'));
+const modalTitle = computed<string>(() =>
+  props.mode === ModalMode.Add ? t('tasks.add') : t('tasks.edit'),
+);
 
-const submitButtonText = computed<string>(() => props.mode === ModalMode.Add ? t('tasks.submitAdd') : t('tasks.submitEdit'));
+const submitButtonText = computed<string>(() =>
+  props.mode === ModalMode.Add ? t('tasks.submitAdd') : t('tasks.submitEdit'),
+);
 
 watch(isModalOpen, (newVal) => {
   if (!newVal) {
@@ -119,100 +193,107 @@ const defaultTaskForm = (): Partial<Task> => ({
   description: '',
   completed: false,
   priority: TaskPriority.Medium,
-  subtasks: []
+  subtasks: [],
 });
 
 const taskForm = ref<Partial<Task>>(defaultTaskForm());
 const showSubtaskForm = ref<boolean>(false);
 const newSubtask = ref<string>('');
 
-watch(() => props.task, (newTask) => {
-  if (newTask) {
-    taskForm.value = { ...newTask };
-  } else {
-    taskForm.value = defaultTaskForm();
-  }
-}, { immediate: true });
+watch(
+  () => props.task,
+  (newTask) => {
+    if (newTask) {
+      taskForm.value = { ...newTask };
+    } else {
+      taskForm.value = defaultTaskForm();
+    }
+  },
+  { immediate: true },
+);
 
-watch(() => props.modelValue, (isOpen) => {
-  if (!isOpen) {
-    showSubtaskForm.value = false;
-    newSubtask.value = '';
-  }
-});
+watch(
+  () => props.modelValue,
+  (isOpen) => {
+    if (!isOpen) {
+      showSubtaskForm.value = false;
+      newSubtask.value = '';
+    }
+  },
+);
 
-const addSubtask = ():void => {
+const addSubtask = (): void => {
   if (!newSubtask.value.trim()) return;
-  
+
   if (!taskForm.value.subtasks) {
     taskForm.value.subtasks = [];
   }
-  
+
   const newSubtaskObj: Subtask = {
     id: Date.now(),
     title: newSubtask.value,
-    completed: false
+    completed: false,
   };
-  
+
   taskForm.value.subtasks.push(newSubtaskObj);
   newSubtask.value = '';
   showSubtaskForm.value = false;
 };
 
-const removeSubtask = (index: number):void => {
+const removeSubtask = (index: number): void => {
   taskForm.value.subtasks?.splice(index, 1);
 };
 
-const closeModal = ():void => {
+const closeModal = (): void => {
   isModalOpen.value = false;
 };
 
-const handleSubmit = ():void => {
+const handleSubmit = (): void => {
   if (props.mode === ModalMode.Add) {
     taskListStore.addTask({
       ...taskForm.value,
       id: Date.now(),
       completed: false,
-      dateCreate: new Date().toISOString()
+      dateCreate: new Date().toISOString(),
     } as Task);
   } else {
     emit('edit-task', taskForm.value);
   }
-  
+
   closeModal();
 };
 
-const updateTaskFromImport = (importedTask: Partial<Task>):void => {
+const updateTaskFromImport = (importedTask: Partial<Task>): void => {
   taskForm.value = { ...importedTask };
 };
 </script>
 
 <style lang="scss" scoped>
-@import "@styles/variables.scss";
+@import '@styles/variables.scss';
 
 .task-form {
   @include flex(column, flex-start, stretch, $spacing-lg);
   width: 100%;
-  
+
   &__group {
     @include flex(column, flex-start, stretch, $spacing-xs);
     margin-bottom: $spacing-md;
   }
-  
+
   &__label {
     font-weight: 500;
     color: $color-text-primary;
     margin-bottom: $spacing-xs;
   }
-  
+
   &__checkbox-group {
     @include flex(row, flex-start, center, $spacing-md);
   }
-  
+
   &__text {
     color: $color-text-secondary;
   }
-  
+
   &__control {
     width: 100%;
     padding: $spacing-md;
@@ -221,58 +302,58 @@ const updateTaskFromImport = (importedTask: Partial<Task>):void => {
     font-size: 14px;
     transition: $transition-base;
     background: $color-white;
-    
+
     &:focus {
       outline: none;
       border-color: $color-primary;
       box-shadow: 0 0 0 2px rgba($color-primary, 0.1);
     }
-    
+
     &::placeholder {
       color: $color-text-lighter;
     }
-    
+
     textarea {
       min-height: 100px;
       resize: vertical;
     }
   }
-  
+
   &__checkbox {
     width: auto;
     margin-right: $spacing-sm;
   }
-  
+
   &__section-title {
     margin: 0 0 $spacing-md;
     font-size: 16px;
     font-weight: 600;
     color: $color-text-primary;
   }
-  
+
   &__subtasks {
     margin: $spacing-lg 0;
     padding-top: $spacing-lg;
     border-top: 1px solid $color-border;
   }
-  
+
   &__subtask-item {
     @include flex(row, flex-start, center, $spacing-sm);
     margin-bottom: $spacing-md;
-    
+
     .task-form__control {
       flex: 1;
     }
   }
-  
+
   &__add-subtask {
     margin-top: $spacing-lg;
   }
-  
+
   &__subtask-form {
     @include flex(row, flex-start, center, $spacing-sm);
     margin-top: $spacing-md;
-    
+
     .task-form__control {
       flex: 1;
     }
@@ -283,4 +364,4 @@ const updateTaskFromImport = (importedTask: Partial<Task>):void => {
     margin-top: $spacing-xl;
   }
 }
-</style> 
+</style>

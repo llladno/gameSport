@@ -7,5 +7,5 @@
 </template>
 
 <script setup lang="ts">
-import {LinkComponent} from "@shared/index.ts";
+import { LinkComponent } from '@shared/index.ts';
 </script>

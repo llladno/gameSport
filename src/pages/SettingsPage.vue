@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import {SettingsPanel} from '@shared/index';
+import { SettingsPanel } from '@shared/index';
 </script>
 
 <style lang="scss" scoped>
@@ -14,7 +14,7 @@ import {SettingsPanel} from '@shared/index';
 
 .settings-page {
   padding: $spacing-xl;
-  
+
   &__title {
     font-size: 32px;
     margin-bottom: $spacing-xl;

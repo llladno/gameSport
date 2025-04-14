@@ -1,28 +1,27 @@
 @import 'light.scss';
 @import 'dark.scss';
 
-
 :root {
   --color-primary: #aa6def;
   --color-primary-hover: #b07df1;
   --color-primary-active: #a665f3;
-  
+
   --color-success: #52c41a;
   --color-warning: #fa8c16;
   --color-danger: #ff4d4f;
   --color-danger-hover: #ff7875;
   --color-danger-active: #d9363e;
-  
+
   --border-radius-small: 4px;
   --border-radius-medium: 8px;
   --border-radius-large: 12px;
-  
+
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 12px;
   --spacing-lg: 16px;
   --spacing-xl: 24px;
-  
+
   --transition-base: all 0.2s ease;
   --transition-smooth: all 0.3s ease;
 }
@@ -32,5 +31,7 @@ body {
   color: var(--color-text-primary);
   margin: 0;
   padding: 0;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }

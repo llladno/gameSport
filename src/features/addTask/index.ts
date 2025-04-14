@@ -1,3 +1,3 @@
-import AddTask from "./ui/AddTask.vue";
+import AddTask from './ui/AddTask.vue';
 
 export { AddTask };

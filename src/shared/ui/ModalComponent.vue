@@ -1,14 +1,28 @@
 <template>
-  <div v-if="modelValue" class="modal-overlay" @click="closeOnOverlayClick && $emit('update:modelValue', false)">
-    <div class="modal-content" @click.stop>
+  <div
+    v-if="modelValue"
+    class="modal-overlay"
+    @click="closeOnOverlayClick && $emit('update:modelValue', false)"
+  >
+    <div
+      class="modal-content"
+      @click.stop
+    >
       <div class="modal-header">
         <h3>{{ title }}</h3>
-        <button class="close-button" @click="$emit('update:modelValue', false)">×</button>
+        <button
+          class="close-button"
+          @click="$emit('update:modelValue', false)">
+          ×</button
+        >
       </div>
       <div class="modal-body">
         <slot></slot>
       </div>
-      <div class="modal-footer" v-if="$slots.footer">
+      <div
+        class="modal-footer"
+        v-if="$slots.footer"
+      >
         <slot name="footer"></slot>
       </div>
     </div>
@@ -17,9 +31,9 @@
 
 <script setup lang="ts">
 defineProps<{
-  modelValue: boolean,
-  title: string,
-  closeOnOverlayClick?: boolean
+  modelValue: boolean;
+  title: string;
+  closeOnOverlayClick?: boolean;
 }>();
 
 defineEmits(['update:modelValue']);
@@ -90,4 +104,4 @@ defineEmits(['update:modelValue']);
   padding: 16px;
   border-top: 1px solid #e0e0e0;
 }
-</style> 
+</style>

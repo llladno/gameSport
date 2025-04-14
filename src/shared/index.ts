@@ -9,5 +9,5 @@ export {
   LinkComponent,
   ModalComponent,
   SettingsPanel,
-    ButtonVariant
-}; 
+  ButtonVariant,
+};
