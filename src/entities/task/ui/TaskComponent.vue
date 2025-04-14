@@ -30,14 +30,14 @@
         </span>
         
         <div v-if="task.dateCreate" class="task-card__date">
-          Создано: {{ formatDate(task.dateCreate) }}
+          {{$t('tasks.created')}}: {{ formatDate(task.dateCreate) }}
         </div>
       </div>
       
       <p v-if="task.description" class="task-card__description">{{ task.description }}</p>
       
       <div v-if="task.subtasks && task.subtasks.length > 0" class="task-card__subtasks">
-        <h4 class="task-card__subtasks-title">Подзадачи:</h4>
+        <h4 class="task-card__subtasks-title">{{$t('tasks.subtasks')}}:</h4>
         <ul class="task-card__subtasks-list">
           <li 
             v-for="subtask in task.subtasks" 

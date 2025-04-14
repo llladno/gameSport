@@ -16,25 +16,18 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
-  modelValue: {
-    type: Boolean,
-    required: true
-  },
-  title: {
-    type: String,
-    default: 'Модальное окно'
-  },
-  closeOnOverlayClick: {
-    type: Boolean,
-    default: true
-  }
-});
+defineProps<{
+  modelValue: boolean,
+  title: string,
+  closeOnOverlayClick?: boolean
+}>();
 
 defineEmits(['update:modelValue']);
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../../app/assets/variables.scss';
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -49,11 +42,23 @@ defineEmits(['update:modelValue']);
 }
 
 .modal-content {
-  background-color: white;
-  border-radius: 8px;
+  background-color: $color-white;
+  border-radius: 10px;
   width: 90%;
   max-width: 500px;
+  max-height: 600px;
+  overflow-y: auto;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    background-color: $color-bg-lighter;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $color-border;
+    border-radius: 4px;
+  }
 }
 
 .modal-header {
@@ -61,7 +66,7 @@ defineEmits(['update:modelValue']);
   justify-content: space-between;
   align-items: center;
   padding: 16px;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid $color-border;
 }
 
 .modal-header h3 {

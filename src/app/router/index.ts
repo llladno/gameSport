@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import TaskListPage from "../../pages/TaskListPage.vue";
-import SettingsPage from "../../pages/SettingsPage.vue";
-import AboutPage from "../../pages/AboutPage.vue";
+import TaskListPage from "@pages/TaskListPage.vue";
+import SettingsPage from "@pages/SettingsPage.vue";
+import AboutPage from "@pages/AboutPage.vue";
 
 
 const router = createRouter({

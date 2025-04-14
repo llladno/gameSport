@@ -13,8 +13,8 @@
       />
     </div>
     <div v-else class="empty-state">
-      <p v-if="tasks.length > 0">Нет задач, соответствующих фильтрам</p>
-      <p v-else>Нет задач. Добавьте новую задачу!</p>
+      <p v-if="tasks.length > 0">{{ $t('tasks.empty.noFilteredTasks')}}</p>
+      <p v-else>{{ $t('tasks.empty.noTasks')}}</p>
     </div>
   </div>
 </template>

@@ -4,7 +4,7 @@
       <input
         type="text"
         v-model="searchQuery"
-        placeholder="Поиск задач..."
+        :placeholder="$t('tasks.filter.search')"
         class="task-filter__search-input"
         @input="handleSearchChange"
       />
@@ -20,12 +20,12 @@
           class="task-filter__checkbox"
         />
         <label for="show-completed" class="task-filter__label">
-          Показывать выполненные
+          {{$t('tasks.filter.showCompleted')}}
         </label>
       </div>
       
       <div class="task-filter__priority-filters">
-        <span class="task-filter__label">Приоритет:</span>
+        <span class="task-filter__label">{{ $t('tasks.priority.title')}}:</span>
         <div class="task-filter__priority-buttons">
           <button
             v-for="priority in priorityOptions"
@@ -37,7 +37,7 @@
             ]"
             @click="togglePriority(priority)"
           >
-            {{ priorityLabels[priority] }}
+            {{ $t(`tasks.priority.${priority}`) }}
           </button>
         </div>
       </div>
@@ -46,7 +46,7 @@
         class="task-filter__reset-btn"
         @click="resetAllFilters"
       >
-        Сбросить фильтры
+        {{ $t('tasks.filter.reset') }}
       </button>
     </div>
   </div>
@@ -54,7 +54,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
-import { priorityLabels, TaskPriority } from '@entities/task';
+import { TaskPriority } from '@entities/task';
 import { useTaskFilter } from '@features/taskFilter';
 import type { TaskFilterOptions } from '../types/TaskFilter';
 const taskFilterStore = useTaskFilter();

@@ -2,7 +2,7 @@
   <modal-component v-model="isModalOpen" :title="modalTitle">
     <form @submit.prevent="handleSubmit" class="task-form">
       <div class="task-form__group">
-        <label class="task-form__label">Название задачи</label>
+        <label class="task-form__label">{{$t('tasks.form.title')}}</label>
         <input 
           v-model="taskForm.title" 
           type="text" 
@@ -12,7 +12,7 @@
       </div>
       
       <div class="task-form__group">
-        <label class="task-form__label">Описание (необязательно)</label>
+        <label class="task-form__label">{{$t('tasks.form.description')}}</label>
         <textarea 
           v-model="taskForm.description" 
           class="task-form__control"
@@ -20,15 +20,15 @@
       </div>
       
       <div class="task-form__group">
-        <label class="task-form__label">Приоритет</label>
+        <label class="task-form__label">{{$t('tasks.form.priority')}}</label>
         <select 
           v-model="taskForm.priority" 
           class="task-form__control"
           required
         >
-          <option :value="TaskPriority.Low">{{ priorityLabels[TaskPriority.Low] }}</option>
-          <option :value="TaskPriority.Medium">{{ priorityLabels[TaskPriority.Medium] }}</option>
-          <option :value="TaskPriority.High">{{ priorityLabels[TaskPriority.High] }}</option>
+          <option :value="TaskPriority.Low">{{ $t(`tasks.priority.${TaskPriority.Low}`) }}</option>
+          <option :value="TaskPriority.Medium">{{ $t(`tasks.priority.${TaskPriority.Medium}`) }}</option>
+          <option :value="TaskPriority.High">{{ $t(`tasks.priority.${TaskPriority.High}`) }}</option>
         </select>
       </div>
       
@@ -39,13 +39,13 @@
             class="task-form__checkbox"
             v-model="taskForm.completed"
           >
-          <span class="task-form__text">Выполнено</span>
+          <span class="task-form__text">{{ $t('tasks.form.completed') }}</span>
         </div>
       </div>
       
       <div class="task-form__subtasks" v-if="mode === ModalMode.Edit">
         <template v-if="taskForm.subtasks && taskForm.subtasks.length > 0">
-          <h4 class="task-form__section-title">Подзадачи</h4>
+          <h4 class="task-form__section-title">{{$t('tasks.subtasks')}}</h4>
           <div v-for="(subtask, index) in taskForm.subtasks" :key="subtask.id" class="task-form__subtask-item">
             <input type="checkbox" class="task-form__checkbox" v-model="subtask.completed">
             <input type="text" v-model="subtask.title" class="task-form__control">
@@ -60,7 +60,7 @@
           
           <div v-if="showSubtaskForm" class="task-form__subtask-form">
             <input type="text" v-model="newSubtask" placeholder="Название подзадачи" class="task-form__control">
-            <button-component type="button" @click="addSubtask" class="task-form__btn task-form__btn--add">Добавить</button-component>
+            <button-component type="button" @click="addSubtask" class="task-form__btn task-form__btn--add">{{$t('tasks.submitAdd')}}</button-component>
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@
       />
       
       <div class="task-form__actions">
-        <button-component :variant="ButtonVariant.Grey" type="button" @click="closeModal">Отмена</button-component>
+        <button-component :variant="ButtonVariant.Grey" type="button" @click="closeModal">{{ $t('common.cancel') }}</button-component>
         <button-component type="submit">{{ submitButtonText }}</button-component>
       </div>
     </form>
@@ -83,10 +83,13 @@
 import {computed, ref, watch} from 'vue';
 import {ButtonComponent, ButtonVariant, ModalComponent} from '@shared/index.ts';
 import type {Subtask, Task} from '@entities/task';
-import {priorityLabels, TaskPriority} from '@entities/task';
+import {TaskPriority} from '@entities/task';
 import {ModalMode, type Props} from "../types/TaskModal.ts";
 import TaskImportExportComponent from './TaskImportExportComponent.vue';
 import {useTaskListStore} from "@widgets/todoList";
+import {useI18n} from "vue-i18n";
+
+const { t } = useI18n();
 
 const props = withDefaults(defineProps<Props>(), {
   mode: ModalMode.Add
@@ -101,9 +104,9 @@ const isModalOpen = computed({
   set: (value) => emit('update:modelValue', value)
 });
 
-const modalTitle = computed<string>(() => props.mode === ModalMode.Add ? 'Добавить задачу' : 'Редактировать задачу');
+const modalTitle = computed<string>(() => props.mode === ModalMode.Add ? t('tasks.add') : t('tasks.edit'));
 
-const submitButtonText = computed<string>(() => props.mode === ModalMode.Add ? 'Добавить' : 'Сохранить');
+const submitButtonText = computed<string>(() => props.mode === ModalMode.Add ? t('tasks.submitAdd') : t('tasks.submitEdit'));
 
 watch(isModalOpen, (newVal) => {
   if (!newVal) {
@@ -164,7 +167,7 @@ const closeModal = ():void => {
   isModalOpen.value = false;
 };
 
-const handleSubmit = () => {
+const handleSubmit = ():void => {
   if (props.mode === ModalMode.Add) {
     taskListStore.addTask({
       ...taskForm.value,
@@ -217,6 +220,7 @@ const updateTaskFromImport = (importedTask: Partial<Task>):void => {
     border-radius: $border-radius-small;
     font-size: 14px;
     transition: $transition-base;
+    background: $color-white;
     
     &:focus {
       outline: none;
@@ -249,7 +253,7 @@ const updateTaskFromImport = (importedTask: Partial<Task>):void => {
   &__subtasks {
     margin: $spacing-lg 0;
     padding-top: $spacing-lg;
-    border-top: 1px solid $color-border-light;
+    border-top: 1px solid $color-border;
   }
   
   &__subtask-item {

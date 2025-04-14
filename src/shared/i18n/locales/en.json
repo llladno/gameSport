@@ -1,0 +1,72 @@
+{
+  "common": {
+    "cancel": "Cancel",
+    "loading": "Loading...",
+    "error": "Error"
+  },
+  "tasks": {
+    "title": "Tasks",
+    "add": "Add task",
+    "submitAdd": "Add",
+    "submitEdit": "Save",
+    "edit": "Edit task",
+    "delete": "Delete",
+    "created": "Created",
+    "subtasks": "Subtasks",
+    "priority": {
+      "title": "Priority",
+      "low": "Low",
+      "medium": "Medium", 
+      "high": "High"
+    },
+    "filter": {
+      "title": "Filters",
+      "showCompleted": "Show completed",
+      "search": "Search tasks...",
+      "reset": "Reset filters"
+    },
+    "empty": {
+      "noTasks": "No tasks. Add a new task!",
+      "noFilteredTasks": "No tasks matching the filters :("
+    },
+    "form": {
+      "title": "Task title",
+      "description": "Description (optional)",
+      "priority": "Priority",
+      "completed": "Completed",
+      "addSubtask": "Add subtask",
+      "import": {
+        "title": "Import/Export",
+        "text": "Text",
+        "export": "Export",
+        "import": "Import",
+        "exportToJson": "Export to JSON",
+        "importFromJson": "Import from JSON",
+        "cancelImport": "Cancel import",
+        "file": "File",
+        "chooseFile": "Choose JSON file",
+        "putJsonData": "Paste JSON task data..."
+      }
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": {
+      "title": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "language": {
+      "title": "Language",
+      "ru": "Русский",
+      "en": "English"
+    },
+    "resetSettings": "Reset settings"
+  },
+  "about": {
+    "title": "About",
+    "version": "Version",
+    "description": "Task management application"
+  }
+} 

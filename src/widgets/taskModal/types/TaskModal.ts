@@ -10,3 +10,8 @@ export enum ModalMode {
     Add = 'add',
     Edit = 'edit'
 }
+
+export interface ImportExportProps {
+    task: Partial<Task>;
+    mode: ModalMode;
+}

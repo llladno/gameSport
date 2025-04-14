@@ -14,33 +14,33 @@ defineProps<{
 .button {
   padding: 7px 15px;
   border-radius: 5px;
-  background: variables.$primary-color;
-  color: variables.$default-white;
+  background: variables.$color-primary;
+  color: variables.$color-white;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 
   &:hover {
-    background-color: variables.$primary-color-hover;
+    background-color: variables.$color-primary-hover;
     color: #fff;
   }
 
   &:active {
-    background-color: variables.$primary-color-active;
+    background-color: variables.$color-primary-active;
     color: #fff;
   }
 
 
   &--grey {
-    background-color: variables.$default-white;
-    color: variables.$primary-color;
+    background-color: variables.$color-white;
+    color: variables.$color-primary;
 
     &:hover {
-      background-color: variables.$primary-color-hover;
+      background-color: variables.$color-primary-hover;
       color: #fff;
     }
 
     &:active {
-      background-color: variables.$primary-color-active;
+      background-color: variables.$color-primary-active;
       color: #fff;
     }
   }
@@ -50,11 +50,11 @@ defineProps<{
     color: variables.$color-white;
 
     &:hover {
-      background-color: darken(variables.$color-danger, 10%);
+      background-color: variables.$color-danger-hover;
     }
 
     &:active {
-      background-color: darken(variables.$color-danger, 20%);
+      background-color: variables.$color-danger-active;
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <router-link :to="to" class="link">
-    <slot></slot>
+    <slot />
   </router-link>
 </template>
 
@@ -15,12 +15,12 @@ defineProps<{
 
 .link {
   text-decoration: none;
-  color: variables.$primary-color;
+  color: variables.$color-primary;
   cursor: pointer;
   transition: color 0.2s ease-in-out;
 
   &:hover {
-    color: variables.$primary-color-hover;
+    color: variables.$color-primary-hover;
   }
 }
 </style>

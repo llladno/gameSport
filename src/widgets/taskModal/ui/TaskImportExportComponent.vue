@@ -1,6 +1,6 @@
 <template>
   <div class="import-export">
-    <h4 class="import-export__section-title">Импорт/Экспорт</h4>
+    <h4 class="import-export__section-title">{{$t('tasks.form.import.title')}}</h4>
     <div class="import-export__buttons">
       <button-component 
         type="button" 
@@ -8,7 +8,7 @@
         @click="exportToJson" 
         v-if="mode === ModalMode.Edit"
       >
-        Экспорт в JSON
+        {{$t('tasks.form.import.exportToJson')}}
       </button-component>
       
       <button-component 
@@ -16,7 +16,7 @@
         :variant="ButtonVariant.Secondary"
         @click="showImportForm = !showImportForm" 
       >
-        {{ showImportForm ? 'Отменить импорт' : 'Импорт из JSON' }}
+        {{ showImportForm ? $t('tasks.form.import.cancelImport') : $t('tasks.form.import.importFromJson') }}
       </button-component>
     </div>
     
@@ -26,13 +26,13 @@
           :class="['import-export__import-tab', importTab === 'text' && 'import-export__import-tab--active']"
           @click="importTab = 'text'"
         >
-          Текст
+          {{$t('tasks.form.import.text')}}
         </div>
         <div 
           :class="['import-export__import-tab', importTab === 'file' && 'import-export__import-tab--active']"
           @click="importTab = 'file'"
         >
-          Файл
+          {{$t('tasks.form.import.file')}}
         </div>
       </div>
       
@@ -40,7 +40,7 @@
         <textarea 
           v-model="importJsonData" 
           class="import-export__control" 
-          placeholder="Вставьте JSON данные задачи..."
+          :placeholder="$t('tasks.form.import.putJsonData')"
           rows="5"
         ></textarea>
       </div>
@@ -56,7 +56,7 @@
             ref="fileInput"
           >
           <label for="task-file-upload" class="import-export__file-label">
-            {{ selectedFileName || 'Выберите JSON файл' }}
+            {{ selectedFileName || $t('tasks.form.import.chooseFile') }}
           </label>
         </div>
       </div>
@@ -71,7 +71,7 @@
           :disabled="!isValidImportData"
           class="import-export__import-button"
         >
-          Импортировать
+          {{ $t('tasks.form.import.import') }}
         </button-component>
       </div>
     </div>
@@ -83,12 +83,7 @@ import {computed, defineEmits, defineProps, ref, watch} from 'vue';
 import {ButtonComponent, ButtonVariant} from "@shared/index.ts";
 import type {Task} from '@entities/task';
 import {TaskPriority} from '@entities/task';
-import {ModalMode} from "../types/TaskModal";
-
-interface ImportExportProps {
-  task: Partial<Task>;
-  mode: ModalMode;
-}
+import {type ImportExportProps, ModalMode} from "../types/TaskModal";
 
 const props = defineProps<ImportExportProps>();
 const emit = defineEmits<{
@@ -289,8 +284,8 @@ const handleImportButtonClick = ():void => {
 .import-export {
   margin: $spacing-xl 0;
   padding: $spacing-lg 0;
-  border-top: 1px solid $color-border-light;
-  border-bottom: 1px solid $color-border-light;
+  border-top: 1px solid $color-border;
+  border-bottom: 1px solid $color-border;
   
   &__section-title {
     margin: 0 0 $spacing-md;
