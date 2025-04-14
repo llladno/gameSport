@@ -2,8 +2,8 @@
   <div class="task-filter">
     <div class="task-filter__search">
       <input
-        type="text"
         v-model="searchQuery"
+        type="text"
         :placeholder="$t('tasks.filter.search')"
         class="task-filter__search-input"
         @input="handleSearchChange"
@@ -13,11 +13,11 @@
     <div class="task-filter__options">
       <div class="task-filter__checkbox-group">
         <input
-          type="checkbox"
           id="show-completed"
           v-model="showCompleted"
-          @change="handleShowCompletedChange"
+          type="checkbox"
           class="task-filter__checkbox"
+          @change="handleShowCompletedChange"
         />
         <label
           for="show-completed"

@@ -4,15 +4,14 @@
     :title="modalTitle"
   >
     <form
-      @submit.prevent="handleSubmit"
       class="task-form"
+      @submit.prevent="handleSubmit"
     >
       <div class="task-form__group">
         <label class="task-form__label">{{ $t('tasks.form.title') }}</label>
         <input
           v-model="taskForm.title"
           type="text"
-          required
           class="task-form__control"
         />
       </div>
@@ -47,22 +46,22 @@
       </div>
 
       <div
-        class="task-form__group"
         v-if="mode === ModalMode.Edit"
+        class="task-form__group"
       >
         <div class="task-form__checkbox-group">
           <input
+            v-model="taskForm.completed"
             type="checkbox"
             class="task-form__checkbox"
-            v-model="taskForm.completed"
           />
           <span class="task-form__text">{{ $t('tasks.form.completed') }}</span>
         </div>
       </div>
 
       <div
-        class="task-form__subtasks"
         v-if="mode === ModalMode.Edit"
+        class="task-form__subtasks"
       >
         <template v-if="taskForm.subtasks && taskForm.subtasks.length > 0">
           <h4 class="task-form__section-title">{{ $t('tasks.subtasks') }}</h4>
@@ -72,13 +71,13 @@
             class="task-form__subtask-item"
           >
             <input
+              v-model="subtask.completed"
               type="checkbox"
               class="task-form__checkbox"
-              v-model="subtask.completed"
             />
             <input
-              type="text"
               v-model="subtask.title"
+              type="text"
               class="task-form__control"
             />
             <button-component
@@ -93,8 +92,8 @@
         <div class="task-form__add-subtask">
           <button-component
             type="button"
-            @click="showSubtaskForm = !showSubtaskForm"
             class="task-form__btn task-form__btn--add"
+            @click="showSubtaskForm = !showSubtaskForm"
           >
             {{ showSubtaskForm ? 'Отменить' : 'Добавить подзадачу' }}
           </button-component>
@@ -104,15 +103,15 @@
             class="task-form__subtask-form"
           >
             <input
-              type="text"
               v-model="newSubtask"
+              type="text"
               placeholder="Название подзадачи"
               class="task-form__control"
             />
             <button-component
               type="button"
-              @click="addSubtask"
               class="task-form__btn task-form__btn--add"
+              @click="addSubtask"
               >{{ $t('tasks.submitAdd') }}</button-component
             >
           </div>
@@ -146,6 +145,7 @@ import {
   ButtonComponent,
   ButtonVariant,
   ModalComponent,
+  useToast,
 } from '@shared/index.ts';
 import type { Subtask, Task } from '@entities/task';
 import { TaskPriority } from '@entities/task';
@@ -155,6 +155,8 @@ import { useTaskListStore } from '@widgets/todoList';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
+
+const { success, warning } = useToast();
 
 const props = withDefaults(defineProps<Props>(), {
   mode: ModalMode.Add,
@@ -249,6 +251,11 @@ const closeModal = (): void => {
 };
 
 const handleSubmit = (): void => {
+  if (!taskForm.value.title?.trim()) {
+    warning(t('tasks.form.warning'));
+    return;
+  }
+
   if (props.mode === ModalMode.Add) {
     taskListStore.addTask({
       ...taskForm.value,
@@ -260,6 +267,7 @@ const handleSubmit = (): void => {
     emit('edit-task', taskForm.value);
   }
 
+  success(t('tasks.form.success'));
   closeModal();
 };
 

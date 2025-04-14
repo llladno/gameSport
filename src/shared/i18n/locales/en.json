@@ -13,6 +13,7 @@
     "delete": "Delete",
     "created": "Created",
     "subtasks": "Subtasks",
+    "taskDeleted": "Task deleted",
     "priority": {
       "title": "Priority",
       "low": "Low",
@@ -35,6 +36,9 @@
       "priority": "Priority",
       "completed": "Completed",
       "addSubtask": "Add subtask",
+      "success": "Task saved successfully!",
+      "warning": "Fill in all required fields!",
+      "error": "Error saving task",
       "import": {
         "title": "Import/Export",
         "text": "Text",
@@ -45,7 +49,10 @@
         "cancelImport": "Cancel import",
         "file": "File",
         "chooseFile": "Choose JSON file",
-        "putJsonData": "Paste JSON task data..."
+        "putJsonData": "Paste JSON task data...",
+        "exportSuccess": "Task exported successfully!",
+        "importSuccess": "Task imported successfully!",
+        "importError": "Error importing task"
       }
     }
   },
@@ -62,7 +69,8 @@
       "ru": "Русский",
       "en": "English"
     },
-    "resetSettings": "Reset settings"
+    "resetSettings": "Reset settings",
+    "success": "Settings saved successfully!"
   },
   "about": {
     "title": "About",

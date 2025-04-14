@@ -59,8 +59,10 @@ import { useSettingsStore } from '@app/stores/settingsStore.ts';
 import { Theme } from '@app/theme';
 import type { Locale } from '@shared/i18n';
 import { computed } from 'vue';
+import { useToast } from '@shared/composables/useToast.ts';
 
 const { t } = useI18n();
+const { success } = useToast();
 const settingsStore = useSettingsStore();
 
 const currentTheme = computed<string>(() => settingsStore.theme);
@@ -87,6 +89,7 @@ const setLocale = (locale: Locale): void => {
 };
 
 const resetAllSettings = (): void => {
+  success(t('settings.success'));
   settingsStore.resetSettings();
 };
 </script>

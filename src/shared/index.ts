@@ -3,6 +3,7 @@ import LinkComponent from './ui/LinkComponent.vue';
 import ModalComponent from './ui/ModalComponent.vue';
 import { ButtonVariant } from './types/button';
 import SettingsPanel from './ui/SettingsPanel.vue';
+import { useToast } from './composables/useToast';
 
 export {
   ButtonComponent,
@@ -10,4 +11,5 @@ export {
   ModalComponent,
   SettingsPanel,
   ButtonVariant,
+  useToast,
 };

@@ -1,6 +1,6 @@
 <template>
   <div class="settings-page">
-    <h1 class="settings-page__title">{{ t('settings.title') }}</h1>
+    <h1 class="settings-page__title">{{ $t('settings.title') }}</h1>
     <settings-panel />
   </div>
 </template>

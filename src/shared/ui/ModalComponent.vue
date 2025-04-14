@@ -12,7 +12,8 @@
         <h3>{{ title }}</h3>
         <button
           class="close-button"
-          @click="$emit('update:modelValue', false)">
+          @click="$emit('update:modelValue', false)"
+        >
           ×</button
         >
       </div>
@@ -20,8 +21,8 @@
         <slot></slot>
       </div>
       <div
-        class="modal-footer"
         v-if="$slots.footer"
+        class="modal-footer"
       >
         <slot name="footer"></slot>
       </div>

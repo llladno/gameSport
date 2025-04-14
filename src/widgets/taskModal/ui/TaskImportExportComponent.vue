@@ -5,10 +5,10 @@
     }}</h4>
     <div class="import-export__buttons">
       <button-component
+        v-if="mode === ModalMode.Edit"
         type="button"
         :variant="ButtonVariant.Secondary"
         @click="exportToJson"
-        v-if="mode === ModalMode.Edit"
       >
         {{ $t('tasks.form.import.exportToJson') }}
       </button-component>
@@ -69,12 +69,12 @@
       >
         <div class="import-export__file-upload">
           <input
-            type="file"
             id="task-file-upload"
+            ref="fileInput"
+            type="file"
             class="import-export__file-input"
             accept=".json"
             @change="handleFileUpload"
-            ref="fileInput"
           />
           <label
             for="task-file-upload"
@@ -95,9 +95,9 @@
         <button-component
           type="button"
           :variant="ButtonVariant.Secondary"
-          @click="handleImportButtonClick"
           :disabled="!isValidImportData"
           class="import-export__import-button"
+          @click="handleImportButtonClick"
         >
           {{ $t('tasks.form.import.import') }}
         </button-component>
@@ -108,10 +108,15 @@
 
 <script setup lang="ts">
 import { computed, defineEmits, defineProps, ref, watch } from 'vue';
-import { ButtonComponent, ButtonVariant } from '@shared/index.ts';
+import { ButtonComponent, ButtonVariant, useToast } from '@shared/index.ts';
 import type { Task } from '@entities/task';
 import { TaskPriority } from '@entities/task';
 import { type ImportExportProps, ModalMode } from '../types/TaskModal';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
+
+const { success, error } = useToast();
 
 const props = defineProps<ImportExportProps>();
 const emit = defineEmits<{
@@ -156,6 +161,7 @@ const exportToJson = (): void => {
   setTimeout(() => {
     document.body.removeChild(linkToDownload);
     URL.revokeObjectURL(url);
+    success(t('tasks.form.import.exportSuccess'));
   }, 0);
 };
 
@@ -232,7 +238,7 @@ const validateImportedTask = (
       TaskPriority.High,
     ];
     const priority = task.priority as string | number;
-    if (!validPriorities.includes(priority as any)) {
+    if (!validPriorities.includes(priority as TaskPriority | string)) {
       return {
         isValid: false,
         error:
@@ -319,8 +325,10 @@ const importFromJson = (): void => {
       fileInput.value.value = '';
     }
     selectedFileName.value = '';
-  } catch (error) {
-    importError.value = 'Ошибка: Неверный формат JSON';
+
+    success(t('tasks.form.import.importSuccess'));
+  } catch {
+    error(t('tasks.form.import.importError'));
   }
 };
 
