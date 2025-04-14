@@ -1,7 +1,21 @@
 {
   "files": [],
+  "compilerOptions": {
+    "lib": ["esnext", "dom"],
+    "baseUrl": "src",
+    "moduleResolution": "node",
+    "paths": {
+      "@app/*": ["app/*"],
+      "@entities/*": ["entities/*"],
+      "@features/*": ["features/*"],
+      "@shared/*": ["shared/*"],
+      "@pages/*": ["pages/*"],
+      "@widgets/*": ["widgets/*"],
+      "@processes/*": ["processes/*"]
+    }
+  },
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
 }
