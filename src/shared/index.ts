@@ -4,6 +4,7 @@ import ModalComponent from './ui/ModalComponent.vue';
 import { ButtonVariant } from './types/button';
 import SettingsPanel from './ui/SettingsPanel.vue';
 import { useToast } from './composables/useToast';
+import PaginationComponent from './ui/PaginationComponent.vue';
 
 export {
   ButtonComponent,
@@ -12,4 +13,5 @@ export {
   SettingsPanel,
   ButtonVariant,
   useToast,
+  PaginationComponent,
 };

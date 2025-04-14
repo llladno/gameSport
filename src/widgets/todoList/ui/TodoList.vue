@@ -6,7 +6,7 @@
       class="task-list"
     >
       <task-component
-        v-for="task in filteredTasks"
+        v-for="task in paginatedTasks"
         :key="task.id"
         :task="task"
         @edit="handleEditTask"
@@ -22,24 +22,83 @@
       <p v-if="tasks.length > 0">{{ $t('tasks.empty.noFilteredTasks') }}</p>
       <p v-else>{{ $t('tasks.empty.noTasks') }}</p>
     </div>
+
+    <div
+      v-if="totalPages > 1"
+      class="pagination-container"
+    >
+      <div class="pagination-controls">
+        <label class="pagination-select">
+          {{ $t('tasks.pagination.itemsPerPage') }}
+          <select
+            v-model="itemsPerPage"
+            @change="handleItemsPerPageChange"
+          >
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
+        </label>
+
+        <pagination-component
+          :current-page="currentPage"
+          :total-pages="totalPages"
+          @page-change="handlePageChange"
+        />
+      </div>
+      <div class="pagination-info">
+        {{ $t('tasks.pagination.page') }} {{ currentPage }}
+        {{ $t('tasks.pagination.of') }} {{ totalPages }}
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useTaskListStore } from '@widgets/todoList';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { type Task } from '@entities/task';
 import { TaskComponent } from '@entities/task';
 import { TaskFilterComponent, useTaskFilter } from '@features/taskFilter';
+import { PaginationComponent } from '@shared/index.ts';
 
 const tasksListStore = useTaskListStore();
 const taskFilterStore = useTaskFilter();
 
 const tasks = computed<Task[]>(() => tasksListStore.getTasks());
+const currentPage = computed<number>(
+  () => tasksListStore.pagination.currentPage,
+);
+const itemsPerPage = computed<number>(
+  () => tasksListStore.pagination.itemsPerPage,
+);
+const totalPages = computed<number>(() => {
+  const filteredCount = filteredTasks.value.length;
+  return Math.ceil(filteredCount / itemsPerPage.value) || 1;
+});
 
 const filteredTasks = computed<Task[]>(() => {
   return taskFilterStore.applyFilters(tasks.value);
 });
+
+const paginatedTasks = computed<Task[]>(() => {
+  const startIndex = (currentPage.value - 1) * itemsPerPage.value;
+  const endIndex = startIndex + itemsPerPage.value;
+  return filteredTasks.value.slice(startIndex, endIndex);
+});
+
+watch(
+  filteredTasks,
+  (newFilteredTasks) => {
+    const maxPage =
+      Math.ceil(newFilteredTasks.length / itemsPerPage.value) || 1;
+    if (currentPage.value > maxPage) {
+      handlePageChange(maxPage);
+    }
+  },
+  { deep: true },
+);
 
 const emit = defineEmits<{
   (e: 'edit-task', task: Task): void;
@@ -71,6 +130,16 @@ const handleToggleSubtask = (subtaskId: number, taskId: number) => {
     });
   }
 };
+
+const handlePageChange = (page: number) => {
+  tasksListStore.setCurrentPage(page);
+};
+
+const handleItemsPerPageChange = (event: Event) => {
+  const target = event.target as HTMLSelectElement;
+  const value = parseInt(target.value, 10);
+  tasksListStore.setItemsPerPage(value);
+};
 </script>
 
 <style lang="scss" scoped>
@@ -99,5 +168,48 @@ const handleToggleSubtask = (subtaskId: number, taskId: number) => {
   border-radius: $border-radius-medium;
   margin-top: $spacing-lg;
   color: $color-text-light;
+}
+
+.pagination-container {
+  margin-top: $spacing-xl;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-md;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-lg;
+  flex-wrap: wrap;
+}
+
+.pagination-select {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  font-size: 14px;
+  color: $color-text-secondary;
+
+  select {
+    padding: $spacing-xs $spacing-sm;
+    border: 1px solid $color-border;
+    border-radius: $border-radius-small;
+    background-color: $color-bg-light;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+    }
+  }
+}
+
+.pagination-info {
+  font-size: 14px;
+  color: $color-text-secondary;
 }
 </style>

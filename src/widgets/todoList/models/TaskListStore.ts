@@ -1,37 +1,31 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+import type { Task } from '@entities/task';
+import { TaskPriority } from '@entities/task';
 
-enum TaskPriority {
-  Low = 'low',
-  Medium = 'medium',
-  High = 'high',
-}
-
-interface Subtask {
-  id: number;
-  title: string;
-  completed: boolean;
-}
-
-interface Task {
-  id: number;
-  title: string;
-  description?: string;
-  completed: boolean;
-  priority: TaskPriority;
-  subtasks?: Subtask[];
-  dateCreate?: string;
+interface PaginationState {
+  currentPage: number;
+  itemsPerPage: number;
 }
 
 export const useTaskListStore = defineStore('taskListStore', () => {
   const tasks = ref<Task[]>([]);
+  const pagination = ref<PaginationState>({
+    currentPage: 1,
+    itemsPerPage: 5,
+  });
 
   const initTasks = () => {
     try {
       const storedTasks = localStorage.getItem('tasks');
       tasks.value = JSON.parse(storedTasks ?? '[]');
+
+      const storedPagination = localStorage.getItem('tasksPagination');
+      if (storedPagination) {
+        pagination.value = JSON.parse(storedPagination);
+      }
     } catch (e) {
-      console.error('Ошибка при загрузке задач из localStorage:', e);
+      console.error('Ошибка при загрузке данных из localStorage:', e);
       tasks.value = [];
     }
   };
@@ -42,8 +36,38 @@ export const useTaskListStore = defineStore('taskListStore', () => {
     localStorage.setItem('tasks', JSON.stringify(tasks.value));
   };
 
-  const getTasks = () => {
+  const savePagination = () => {
+    localStorage.setItem('tasksPagination', JSON.stringify(pagination.value));
+  };
+
+  const getTasks = (): Task[] => {
     return tasks.value;
+  };
+
+  const getPaginatedTasks = computed(() => {
+    const startIndex =
+      (pagination.value.currentPage - 1) * pagination.value.itemsPerPage;
+    const endIndex = startIndex + pagination.value.itemsPerPage;
+    return tasks.value.slice(startIndex, endIndex);
+  });
+
+  const getTotalPages = computed(() => {
+    return Math.ceil(tasks.value.length / pagination.value.itemsPerPage);
+  });
+
+  const setCurrentPage = (page: number) => {
+    pagination.value.currentPage = page;
+    savePagination();
+  };
+
+  const setItemsPerPage = (itemsPerPage: number) => {
+    pagination.value.itemsPerPage = itemsPerPage;
+
+    const maxPage = Math.max(1, Math.ceil(tasks.value.length / itemsPerPage));
+    if (pagination.value.currentPage > maxPage) {
+      pagination.value.currentPage = maxPage;
+    }
+    savePagination();
   };
 
   const addTask = (task: Partial<Task>) => {
@@ -81,11 +105,26 @@ export const useTaskListStore = defineStore('taskListStore', () => {
 
     tasks.value.splice(index, 1);
     saveTasks();
+
+    const maxPage = Math.max(
+      1,
+      Math.ceil((tasks.value.length - 1) / pagination.value.itemsPerPage),
+    );
+    if (pagination.value.currentPage > maxPage) {
+      pagination.value.currentPage = maxPage;
+      savePagination();
+    }
+
     return true;
   };
 
   return {
     getTasks,
+    getPaginatedTasks,
+    getTotalPages,
+    pagination,
+    setCurrentPage,
+    setItemsPerPage,
     addTask,
     updateTask,
     deleteTask,
