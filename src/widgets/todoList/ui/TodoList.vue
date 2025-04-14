@@ -1,8 +1,9 @@
 <template>
-  <div class="todo-list-container" id="todo-list-container">
-    <div v-if="tasks && tasks.length > 0" class="task-list" id="task-list">
+  <div class="todo-list-container">
+    <task-filter-component class="todo-list__filter" />
+    <div v-if="filteredTasks.length > 0" class="task-list">
       <task-component 
-        v-for="task in tasks" 
+        v-for="task in filteredTasks" 
         :key="task.id" 
         :task="task"
         @edit="handleEditTask"
@@ -11,20 +12,28 @@
         @toggle-subtask="handleToggleSubtask"
       />
     </div>
-    <div v-else class="empty-state" id="empty-tasks-state">
-      <p>Нет задач. Добавьте новую задачу!</p>
+    <div v-else class="empty-state">
+      <p v-if="tasks.length > 0">Нет задач, соответствующих фильтрам</p>
+      <p v-else>Нет задач. Добавьте новую задачу!</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {useTaskListStore} from "@widgets/todoList";
-import {computed} from "vue";
-import {type Task} from "@entities/task";
-import {TaskComponent} from "@entities/task";
+import { useTaskListStore } from "@widgets/todoList";
+import { computed } from "vue";
+import { type Task } from "@entities/task";
+import { TaskComponent } from "@entities/task";
+import { TaskFilterComponent, useTaskFilter } from "@features/taskFilter";
 
 const tasksListStore = useTaskListStore();
+const taskFilterStore = useTaskFilter();
+
 const tasks = computed<Task[]>(() => tasksListStore.getTasks());
+
+const filteredTasks = computed<Task[]>(() => {
+  return taskFilterStore.applyFilters(tasks.value);
+});
 
 const emit = defineEmits<{
   (e: 'edit-task', task: Task): void
@@ -48,7 +57,6 @@ const handleToggleCompleted = (task: Task) => {
 
 const handleToggleSubtask = (subtaskId: number, taskId: number) => {
   console.log('Toggle subtask:', subtaskId, 'in task:', taskId);
-  // Логика обновления подзадачи
   const task = tasks.value.find(t => t.id === taskId);
   if (task && task.subtasks) {
     const updatedSubtasks = task.subtasks.map(st => 
@@ -63,25 +71,31 @@ const handleToggleSubtask = (subtaskId: number, taskId: number) => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@styles/variables.scss";
+
 .todo-list-container {
-  padding: 16px;
+  padding: $spacing-lg;
   max-width: 800px;
   margin: 0 auto;
+}
+
+.todo-list__filter {
+  margin-bottom: $spacing-xl;
 }
 
 .task-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: $spacing-lg;
 }
 
 .empty-state {
   text-align: center;
-  padding: 32px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  margin-top: 24px;
-  color: #888;
+  padding: $spacing-xl;
+  background-color: $color-bg-light;
+  border-radius: $border-radius-medium;
+  margin-top: $spacing-lg;
+  color: $color-text-light;
 }
 </style>
