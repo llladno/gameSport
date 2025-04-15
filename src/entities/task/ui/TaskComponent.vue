@@ -32,7 +32,7 @@
           class="task-card__priority"
           :class="`task-card__priority--${task.priority}`"
         >
-          {{ priorityLabels[task.priority || TaskPriority.Medium] }}
+          {{ $t(`tasks.priority.${task.priority}`) }}
         </span>
 
         <div
@@ -76,7 +76,6 @@
 
 <script setup lang="ts">
 import type { Task } from '../types/task';
-import { priorityLabels, TaskPriority } from '../types/task';
 
 const props = defineProps<{ task: Task }>();
 const emit = defineEmits<{

@@ -4,6 +4,11 @@
     "loading": "Loading...",
     "error": "Error"
   },
+  "header": {
+    "tasks": "Tasks",
+    "settings": "Settings",
+    "about": "About"
+  },
   "tasks": {
     "title": "Tasks",
     "add": "Add task",
