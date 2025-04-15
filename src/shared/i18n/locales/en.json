@@ -80,6 +80,17 @@
   "about": {
     "title": "About",
     "version": "Version",
-    "description": "Task management application"
+    "description": "Task management application",
+    "projectName": "GameSport - Task Manager",
+    "shortDescription": "GameSport is a web application for task management.",
+    "techStack": "Tech Stack",
+    "testing": "Testing",
+    "testDescription": "The project is covered with unit tests using Vitest. Tests cover the main components and functionality:",
+    "components": {
+      "taskFilterStore": "TaskFilterStore - task filtering",
+      "taskListStore": "TaskListStore - task operations (create, edit, delete)",
+      "taskFilterComponent": "TaskFilterComponent - filtering component",
+      "taskModalComponent": "TaskModalComponent - modal window for creating/editing tasks"
+    }
   }
 }

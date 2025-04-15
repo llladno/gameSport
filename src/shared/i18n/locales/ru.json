@@ -80,6 +80,17 @@
   "about": {
     "title": "О приложении",
     "version": "Версия",
-    "description": "Приложение для управления задачами"
+    "description": "Приложение для управления задачами",
+    "projectName": "GameSport - Менеджер задач",
+    "shortDescription": "GameSport - это веб-приложение для управления задач.",
+    "techStack": "Технический стек",
+    "testing": "Тестирование",
+    "testDescription": "Проект покрыт юнит-тестами с использованием Vitest. Тесты охватывают основные компоненты и функциональность:",
+    "components": {
+      "taskFilterStore": "TaskFilterStore - фильтрация задач",
+      "taskListStore": "TaskListStore - работа с задачами (создание, редактирование, удаление)",
+      "taskFilterComponent": "TaskFilterComponent - компонент фильтрации",
+      "taskModalComponent": "TaskModalComponent - модальное окно создания/редактирования задач"
+    }
   }
 }
