@@ -6,13 +6,22 @@ export type Locale = 'en' | 'ru';
 
 export const defaultLocale: Locale = 'ru';
 
+console.log('Loading i18n with messages:', { en, ru });
+
 export const i18n = createI18n({
   legacy: false,
+  globalInjection: true,
+  runtimeOnly: false,
+  allowComposition: true,
   locale: localStorage.getItem('locale') || defaultLocale,
   fallbackLocale: defaultLocale,
   messages: {
     en,
     ru,
+  },
+  missing: (locale: string, key: string) => {
+    console.warn(`Missing translation key: ${key} for locale: ${locale}`);
+    return key;
   },
 });
 

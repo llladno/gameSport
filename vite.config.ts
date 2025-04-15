@@ -26,5 +26,10 @@ export default defineConfig({
         },
       },
     },
+    assetsInlineLimit: 4096,
+    chunkSizeWarningLimit: 2048,
   },
+  optimizeDeps: {
+    include: ['vue-i18n']
+  }
 });
