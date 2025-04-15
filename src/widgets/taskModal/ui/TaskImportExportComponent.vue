@@ -357,6 +357,7 @@ const handleImportButtonClick = (): void => {
 
   &__buttons {
     @include flex(row, flex-start, center, $spacing-sm);
+    flex-wrap: wrap;
     margin-bottom: $spacing-lg;
   }
 

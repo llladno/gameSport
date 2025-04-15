@@ -1,5 +1,5 @@
 <template>
-  <header class="flex gap-4 h-10 items-center px-10">
+  <header class="flex gap-4 h-10 items-center px-4 md:px-10">
     <link-component
       class="header-link"
       to="/"
@@ -30,6 +30,11 @@ import { LinkComponent } from '@shared/index.ts';
   align-items: center;
   transition: 0.2s ease-in-out;
   padding: 0 5px;
+  font-size: 14px;
+  
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
 
   &:hover {
     background: $color-primary-hover;
