@@ -30,6 +30,6 @@ export default defineConfig({
     chunkSizeWarningLimit: 2048,
   },
   optimizeDeps: {
-    include: ['vue-i18n']
-  }
+    include: ['vue-i18n'],
+  },
 });
