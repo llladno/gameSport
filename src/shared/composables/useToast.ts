@@ -1,22 +1,22 @@
 import { useToast as useVueToast } from 'vue-toastification';
-import type { ToastOptions } from 'vue-toastification';
+import type { ToastOptions } from "vue-toastification/dist/types/types";
 
 export const useToast = () => {
   const toast = useVueToast();
 
-  const success = (message: string, options?: ToastOptions) => {
+  const success = (message: string, options?: Omit<ToastOptions, 'type'>) => {
     toast.success(message, options);
   };
 
-  const error = (message: string, options?: ToastOptions) => {
+  const error = (message: string, options?: Omit<ToastOptions, 'type'>) => {
     toast.error(message, options);
   };
 
-  const info = (message: string, options?: ToastOptions) => {
+  const info = (message: string, options?: Omit<ToastOptions, 'type'>) => {
     toast.info(message, options);
   };
 
-  const warning = (message: string, options?: ToastOptions) => {
+  const warning = (message: string, options?: Omit<ToastOptions, 'type'>) => {
     toast.warning(message, options);
   };
 
