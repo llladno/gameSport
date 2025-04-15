@@ -9,7 +9,7 @@ const mockTask: Task = {
   completed: false,
   priority: TaskPriority.Medium,
   dateCreate: '2023-01-01T12:00:00.000Z',
-  subtasks: []
+  subtasks: [],
 };
 
 describe('TaskModal Business Logic', () => {
@@ -21,11 +21,11 @@ describe('TaskModal Business Logic', () => {
     mockAddTask = vi.fn().mockImplementation((task) => ({
       ...task,
       id: 123456789,
-      dateCreate: '2023-01-01T12:00:00.000Z'
+      dateCreate: '2023-01-01T12:00:00.000Z',
     }));
     mockUpdateTask = vi.fn().mockImplementation((task) => ({
       ...mockTask,
-      ...task
+      ...task,
     }));
   });
 
@@ -77,14 +77,14 @@ describe('TaskModal Business Logic', () => {
   it('should format subtasks correctly', () => {
     const subtasks = [
       { id: 1, title: 'Subtask 1', completed: false },
-      { id: 2, title: 'Subtask 2', completed: true }
+      { id: 2, title: 'Subtask 2', completed: true },
     ];
 
     const formData = {
       title: 'Task with Subtasks',
       subtasks: subtasks,
     };
-    
+
     const result = mockAddTask({
       ...formData,
       completed: false,
@@ -96,4 +96,4 @@ describe('TaskModal Business Logic', () => {
     expect(result.subtasks[1].title).toBe('Subtask 2');
     expect(result.subtasks[1].completed).toBe(true);
   });
-}); 
+});

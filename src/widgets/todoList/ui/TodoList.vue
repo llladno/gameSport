@@ -64,12 +64,12 @@ import { computed, watch } from 'vue';
 import { type Task } from '@entities/task';
 import { TaskComponent } from '@entities/task';
 import { TaskFilterComponent, useTaskFilter } from '@features/taskFilter';
-import {PaginationComponent, useToast} from '@shared/index.ts';
-import {AddTask} from "@features/addTask";
-import {useI18n} from "vue-i18n";
+import { PaginationComponent, useToast } from '@shared/index.ts';
+import { AddTask } from '@features/addTask';
+import { useI18n } from 'vue-i18n';
 
-const {success} = useToast();
-const {t} = useI18n();
+const { success } = useToast();
+const { t } = useI18n();
 
 const tasksListStore = useTaskListStore();
 const taskFilterStore = useTaskFilter();

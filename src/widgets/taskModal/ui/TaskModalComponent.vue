@@ -95,7 +95,11 @@
             class="task-form__btn task-form__btn--add"
             @click="showSubtaskForm = !showSubtaskForm"
           >
-            {{ showSubtaskForm ? $t('common.cancel') : $t('tasks.form.addSubtask') }}
+            {{
+              showSubtaskForm
+                ? $t('common.cancel')
+                : $t('tasks.form.addSubtask')
+            }}
           </button-component>
 
           <div

@@ -240,8 +240,7 @@ const validateImportedTask = (
     if (!validPriorities.includes(priority as TaskPriority | string)) {
       return {
         isValid: false,
-        error:
-            t('tasks.form.import.formatError'),
+        error: t('tasks.form.import.formatError'),
       };
     }
   }

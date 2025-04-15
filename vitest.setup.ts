@@ -64,10 +64,10 @@ config.global.mocks = {
   $i18n: {
     locale: 'ru',
     t: (key: string) => key,
-  }
+  },
 };
 
 config.global.stubs = {
   'button-component': true,
   'modal-component': true,
-}; 
+};

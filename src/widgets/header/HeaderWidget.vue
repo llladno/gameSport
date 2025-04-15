@@ -1,8 +1,20 @@
 <template>
   <header class="flex gap-4 h-10 items-center px-10">
-    <link-component class="header-link" to="/">{{$t('header.tasks')}}</link-component>
-    <link-component class="header-link" to="/settings">{{$t('header.settings')}}</link-component>
-    <link-component class="header-link" to="/about">{{$t('header.about')}}</link-component>
+    <link-component
+      class="header-link"
+      to="/"
+      >{{ $t('header.tasks') }}</link-component
+    >
+    <link-component
+      class="header-link"
+      to="/settings"
+      >{{ $t('header.settings') }}</link-component
+    >
+    <link-component
+      class="header-link"
+      to="/about"
+      >{{ $t('header.about') }}</link-component
+    >
   </header>
 </template>
 

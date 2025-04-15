@@ -21,4 +21,4 @@ export default defineConfig({
       '@styles': fileURLToPath(new URL('./src/app/assets', import.meta.url)),
     },
   },
-}); 
+});
