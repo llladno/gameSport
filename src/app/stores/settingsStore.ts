@@ -16,6 +16,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   const changeLocale = (newLocale: Locale): void => {
     locale.value = newLocale;
     setLocale(newLocale);
+    localStorage.setItem('locale', newLocale);
   };
 
   const resetSettings = (): void => {
