@@ -19,6 +19,7 @@
     "created": "Создано",
     "subtasks": "Подзадачи",
     "taskDeleted": "Задача удалена",
+    "taskCompleted": "Задача выполнена",
     "pagination": {
       "itemsPerPage": "Элементов на странице:",
       "of": "из",

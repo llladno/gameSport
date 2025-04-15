@@ -1,5 +1,5 @@
 <template>
-  <button-component @click="$emit('openModal')">+</button-component>
+  <button-component @click="$emit('openModal')">{{$t('tasks.add')}}</button-component>
 </template>
 
 <script setup lang="ts">

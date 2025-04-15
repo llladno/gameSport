@@ -1,6 +1,9 @@
 <template>
   <div class="todo-list-container">
-    <task-filter-component class="todo-list__filter" />
+    <div class="flex flex-col gap-6">
+      <add-task @open-modal="$emit('open-modal')" />
+      <task-filter-component class="todo-list__filter" />
+    </div>
     <div
       v-if="filteredTasks.length > 0"
       class="task-list"
@@ -61,7 +64,12 @@ import { computed, watch } from 'vue';
 import { type Task } from '@entities/task';
 import { TaskComponent } from '@entities/task';
 import { TaskFilterComponent, useTaskFilter } from '@features/taskFilter';
-import { PaginationComponent } from '@shared/index.ts';
+import {PaginationComponent, useToast} from '@shared/index.ts';
+import {AddTask} from "@features/addTask";
+import {useI18n} from "vue-i18n";
+
+const {success} = useToast();
+const {t} = useI18n();
 
 const tasksListStore = useTaskListStore();
 const taskFilterStore = useTaskFilter();
@@ -101,6 +109,7 @@ watch(
 );
 
 const emit = defineEmits<{
+  (e: 'open-modal'): void;
   (e: 'edit-task', task: Task): void;
   (e: 'delete-task', taskId: number): void;
 }>();
@@ -114,6 +123,10 @@ const handleDeleteTask = (taskId: number) => {
 };
 
 const handleToggleCompleted = (task: Task) => {
+  if (task.completed) {
+    success(t('tasks.taskCompleted'));
+  }
+
   tasksListStore.updateTask(task);
 };
 

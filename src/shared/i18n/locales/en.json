@@ -19,6 +19,7 @@
     "created": "Created",
     "subtasks": "Subtasks",
     "taskDeleted": "Task deleted",
+    "taskCompleted": "Task completed",
     "pagination": {
       "itemsPerPage": "Items per page:",
       "of": "of",
