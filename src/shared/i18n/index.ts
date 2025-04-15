@@ -14,12 +14,15 @@ const messages = {
 console.log('Loading i18n with messages:', messages);
 console.log('Russian translations sample:', messages.ru.header);
 
+const savedLocale = localStorage.getItem('locale');
+console.log('Saved locale:', savedLocale);
+
 export const i18n = createI18n({
   legacy: false,
   globalInjection: true,
   runtimeOnly: false,
   allowComposition: true,
-  locale: localStorage.getItem('locale') || defaultLocale,
+  locale: savedLocale || defaultLocale,
   fallbackLocale: defaultLocale,
   messages,
   missing: (locale: string, key: string) => {
@@ -33,9 +36,9 @@ export const i18n = createI18n({
       );
     return translation || key;
   },
-  warnHtmlMessage: false,
-  silentTranslationWarn: false,
-  silentFallbackWarn: false,
+  sync: true,
+  missingWarn: true,
+  fallbackWarn: true,
 });
 
 // Добавляем проверку загруженных переводов
@@ -57,7 +60,8 @@ export function setLocale(locale: Locale): void {
 }
 
 export function getLocale(): Locale {
-  return i18n.global.locale.value as Locale;
+  const currentLocale = localStorage.getItem('locale') || defaultLocale;
+  return currentLocale as Locale;
 }
 
 export function t(key: string): string {
