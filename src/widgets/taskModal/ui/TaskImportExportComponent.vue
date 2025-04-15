@@ -187,14 +187,13 @@ const handleFileUpload = (event: Event): void => {
       importJsonData.value = content;
 
       JSON.parse(content);
-    } catch (error) {
-      console.error('Ошибка при чтении файла JSON:', error);
-      importError.value = 'Ошибка: Файл содержит невалидный JSON';
+    } catch {
+      importError.value = t('tasks.form.import.importError');
       importJsonData.value = '';
     }
   };
   reader.onerror = () => {
-    importError.value = 'Ошибка чтения файла';
+    importError.value = t('tasks.form.import.importError');
     importJsonData.value = '';
   };
   reader.readAsText(file);
@@ -204,27 +203,27 @@ const validateImportedTask = (
   data: unknown,
 ): { isValid: boolean; error?: string } => {
   if (!data || typeof data !== 'object') {
-    return { isValid: false, error: 'Данные должны быть объектом' };
+    return { isValid: false, error: t('tasks.form.import.formatError') };
   }
 
   const task = data as Record<string, unknown>;
 
   if (!task.title) {
-    return { isValid: false, error: 'Название задачи обязательно' };
+    return { isValid: false, error: t('tasks.form.import.formatError') };
   }
 
   if (task.title && typeof task.title !== 'string') {
-    return { isValid: false, error: 'Название задачи должно быть строкой' };
+    return { isValid: false, error: t('tasks.form.import.formatError') };
   }
 
   if (task.description !== undefined && typeof task.description !== 'string') {
-    return { isValid: false, error: 'Описание задачи должно быть строкой' };
+    return { isValid: false, error: t('tasks.form.import.formatError') };
   }
 
   if (task.completed !== undefined && typeof task.completed !== 'boolean') {
     return {
       isValid: false,
-      error: 'Статус задачи (completed) должен быть булевым значением',
+      error: t('tasks.form.import.formatError'),
     };
   }
 
@@ -242,21 +241,21 @@ const validateImportedTask = (
       return {
         isValid: false,
         error:
-          'Некорректное значение приоритета. Допустимые значения: low, medium, high',
+            t('tasks.form.import.formatError'),
       };
     }
   }
 
   if (task.subtasks !== undefined) {
     if (!Array.isArray(task.subtasks)) {
-      return { isValid: false, error: 'Подзадачи должны быть массивом' };
+      return { isValid: false, error: t('tasks.form.import.formatError') };
     }
 
     for (const subtask of task.subtasks) {
       if (typeof subtask !== 'object' || subtask === null) {
         return {
           isValid: false,
-          error: 'Каждая подзадача должна быть объектом',
+          error: t('tasks.form.import.formatError'),
         };
       }
 
@@ -265,7 +264,7 @@ const validateImportedTask = (
       if (!subtaskObj.title || typeof subtaskObj.title !== 'string') {
         return {
           isValid: false,
-          error: 'Каждая подзадача должна иметь название (строка)',
+          error: t('tasks.form.import.formatError'),
         };
       }
 
@@ -275,12 +274,12 @@ const validateImportedTask = (
       ) {
         return {
           isValid: false,
-          error: 'Статус подзадачи должен быть булевым значением',
+          error: t('tasks.form.import.formatError'),
         };
       }
 
       if (!subtaskObj.id) {
-        return { isValid: false, error: 'Каждая подзадача должна иметь ID' };
+        return { isValid: false, error: t('tasks.form.import.formatError') };
       }
     }
   }

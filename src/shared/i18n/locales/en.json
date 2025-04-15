@@ -44,6 +44,7 @@
     "form": {
       "title": "Task title",
       "description": "Description (optional)",
+      "subtaskName": "Subtask name",
       "priority": "Priority",
       "completed": "Completed",
       "addSubtask": "Add subtask",
@@ -63,7 +64,8 @@
         "putJsonData": "Paste JSON task data...",
         "exportSuccess": "Task exported successfully!",
         "importSuccess": "Task imported successfully!",
-        "importError": "Error importing task"
+        "importError": "Error importing task",
+        "formatError": "Invalid JSON format"
       }
     }
   },

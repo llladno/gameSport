@@ -95,7 +95,7 @@
             class="task-form__btn task-form__btn--add"
             @click="showSubtaskForm = !showSubtaskForm"
           >
-            {{ showSubtaskForm ? 'Отменить' : 'Добавить подзадачу' }}
+            {{ showSubtaskForm ? $t('common.cancel') : $t('tasks.form.addSubtask') }}
           </button-component>
 
           <div
@@ -105,7 +105,7 @@
             <input
               v-model="newSubtask"
               type="text"
-              placeholder="Название подзадачи"
+              :placeholder="$t('tasks.form.subtaskName')"
               class="task-form__control"
             />
             <button-component
