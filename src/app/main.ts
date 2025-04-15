@@ -28,10 +28,8 @@ const toastOptions = {
   rtl: false,
 };
 
-// Инициализируем i18n первым
 app.use(i18n);
 
-// Затем инициализируем store и остальные плагины
 const pinia = createPinia();
 app.use(pinia);
 app.use(router);
