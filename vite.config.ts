@@ -32,4 +32,7 @@ export default defineConfig({
   optimizeDeps: {
     include: ['vue-i18n'],
   },
+  json: {
+    stringify: true,
+  },
 });
