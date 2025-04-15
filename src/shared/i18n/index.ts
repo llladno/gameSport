@@ -21,6 +21,15 @@ export const i18n = createI18n({
   locale: savedLocale || defaultLocale,
   fallbackLocale: defaultLocale,
   messages,
+  missing: (locale: string, key: string) => {
+    const translation = key
+        .split('.')
+        .reduce(
+            (obj: any, k: string) => obj && obj[k],
+            messages[locale as keyof typeof messages],
+        );
+    return translation || key;
+  },
   sync: true,
   missingWarn: true,
   fallbackWarn: true,
