@@ -60,6 +60,7 @@ import { Theme } from '@app/theme';
 import type { Locale } from '@shared/i18n';
 import { computed } from 'vue';
 import { useToast } from '@shared/composables/useToast.ts';
+import { i18n } from '@shared/i18n';
 
 const { t } = useI18n();
 const { success } = useToast();
@@ -78,7 +79,7 @@ const setTheme = (theme: Theme): void => {
   success(t('settings.success'));
 };
 
-const currentLocale = computed<string>(() => settingsStore.locale);
+const currentLocale = computed<string>(() => i18n.global.locale.value);
 
 const languageOptions = [
   { code: 'ru' as Locale, name: 'Русский' },
