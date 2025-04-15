@@ -6,7 +6,7 @@
       <h3 class="settings-panel__section-title">{{
         t('settings.theme.title')
       }}</h3>
-      <div class="flex gap-3">
+      <div class="flex gap-3 flex-wrap">
         <button
           v-for="themeOption in themeOptions"
           :key="themeOption.value"
